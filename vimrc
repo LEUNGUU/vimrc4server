@@ -217,6 +217,5 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " For color themes
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/colors/hybrid.vim'
-set term=xterm-256color
 set background=dark
 colorscheme hybrid
