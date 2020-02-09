@@ -150,11 +150,14 @@ set display=lastline
 set showbreak=↪
 set listchars=tab:\▏\ ,extends:⟫,precedes:⟪,nbsp:␣,trail:·
 "set fillchars=vert:▉,fold:─
+
 let mapleader=";"
 inoremap <leader>w <Esc>:w<cr>
 nnoremap <leader>x :w\|bd<cr>
 " ,e
 inoremap jj <Esc>
+inoremap kkk <Esc>
+inoremap llll <Esc>
 " Capital letter
 nnoremap <C-S-U> gUiw
 inoremap <C-S-U> <Esc>gUiwgi
@@ -174,19 +177,19 @@ nnoremap <leader>l :bp<cr>
 nnoremap <leader>k :bn<cr>
 
 " tab complete
-"set tags=tags
-"set autochdir
+set tags=tags
+set autochdir
 
-"function! CleverTab()
-"  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-"    return "\<Tab>"
-"  elseif strpart( getline('.'), col('.')-2, 2) =~ '\s$'
-"    return "\<Tab>"
-"  else
-"    return "\<C-N>"
-"  endif
-"endfunction
-"inoremap <Tab> <C-R>=CleverTab()<CR>
+function! CleverTab()
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  elseif strpart( getline('.'), col('.')-2, 2) =~ '\s$'
+    return "\<Tab>"
+  else
+    return "\<C-N>"
+  endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
 " For python
 autocmd bufnewfile *.py call HeaderPython()
 function! HeaderPython()
