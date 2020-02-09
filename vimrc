@@ -214,3 +214,8 @@ endfunc
 
 " For json
 autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" For color themes
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/colors/hybrid.vim'
+set background=dark
+colorscheme hybrid
