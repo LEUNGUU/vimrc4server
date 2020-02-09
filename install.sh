@@ -8,9 +8,9 @@ chmod +x $HOME/.local/bin/nvim.appimage
 cd $HOME/.local/bin/
 ./nvim.appimage --appimage-extract
 rm -rf ./nvim.appimage
-echo "alias vim=$HOME/.local/bin/squashfs-root/usr/bin/nvim" >> $HOME/.bashrc
+echo "alias vim='$HOME/.local/bin/squashfs-root/usr/bin/nvim'" >> $HOME/.bashrc
 source $HOME/.bashrc
-cd ~
+cd -
 
 # install vimrc
 mkdir -p $HOME/.config/nvim
