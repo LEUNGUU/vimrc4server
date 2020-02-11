@@ -101,11 +101,15 @@ set nostartofline               " Cursor in same column for few commands
 set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
 set splitbelow splitright       " Splits open bottom right
 set switchbuf=useopen,usetab    " Jump to the first open window in any tab
-set switchbuf+=vsplit           " Switch buffer behavior to vsplit
+if version < 800
+        set switchbuf+=vsplit           " Switch buffer behavior to vsplit
+endif
 set backspace=indent,eol,start  " Intuitive backspacing in insert mode
 set diffopt=filler,iwhite       " Diff mode: show fillers, ignore whitespace
 set completeopt=menuone         " Always show menu, even for one item
-set completeopt+=noselect       " Do not select a match in the menu
+if version < 800
+        set completeopt+=noselect       " Do not select a match in the menu
+endif
 
 if has('patch-7.4.775')
 	" Do not insert any text for a match until the user selects from menu
@@ -216,6 +220,6 @@ endfunc
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " For color themes
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/colors/hybrid.vim'
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/.vim/colors/hybrid.vim'
 set background=dark
 colorscheme hybrid
