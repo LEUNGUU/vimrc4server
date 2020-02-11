@@ -16,3 +16,6 @@ cd -
 mkdir -p $HOME/.config/nvim
 cp -a colors $HOME/.config/nvim/
 cp vimrc $HOME/.config/nvim/init.vim
+
+# install tmux
+cp tmux.conf $HOME/.tmux.conf
