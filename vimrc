@@ -3,10 +3,8 @@ set synmaxcol=1000
 set modeline
 set report=0
 set lazyredraw " to avoid scrolling problems
-set pastetoggle=<F2>
 " set nowrap
-set hls
-set nocompatible
+set hlsearch
 set mouse=nv
 set encoding=utf-8
 set visualbell
@@ -57,6 +55,7 @@ if has('wildmenu')
 	" set wildmode=list:longest,full
 	" set wildoptions=tagfile
 	" set wildignorecase
+        set wildoptions=pum
 	set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
 	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
 	set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
@@ -149,23 +148,30 @@ set laststatus=2        " Always show a status line
 set colorcolumn=120      " Highlight the 80th character limit
 set display=lastline
 
+
 " UI Symbols
 " icons:  ▏│ ¦ ╎ ┆ ⋮ ⦙ ┊ 
 set showbreak=↪
 set listchars=tab:\▏\ ,extends:⟫,precedes:⟪,nbsp:␣,trail:·
 "set fillchars=vert:▉,fold:─
 
-let mapleader=";"
+let mapleader="\<Space>"
+let maplocalleader=","
 inoremap <leader>w <Esc>:w<cr>
 nnoremap <leader>x :w\|bd<cr>
-" ,e
-inoremap jj <Esc>
-inoremap kkk <Esc>
-inoremap llll <Esc>
-" Capital letter
-nnoremap <C-S-U> gUiw
-inoremap <C-S-U> <Esc>gUiwgi
 
+" ,e for netrw
+set nocp
+filetype plugin on
+let g:netrw_banner=0
+let g:netrw_liststyle=3
+let g:netrw_winsize=25
+let g:netrw_list_hide= '.*\.swp$,.DS_Store,*/tmp/*,*.so,*.swp,*.zip,*.git,^\.\.\=/\=$'
+nnoremap <localleader>e :Vexplore<cr>
+
+" Double leader key for toggling visual-line mode
+nmap <Leader><Leader> V
+xmap <Leader><Leader> <Esc>
 " use ctrl+h/j/k/l switch window
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -175,10 +181,6 @@ noremap <C-l> <C-w>l
 " use :Q exit
 map :Q :q
 map <M-q> :q<Cr>
-
-" switch between buffers
-nnoremap <leader>l :bp<cr>
-nnoremap <leader>k :bn<cr>
 
 " tab complete
 set tags=tags
@@ -194,32 +196,28 @@ function! CleverTab()
   endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
-" For python
-autocmd bufnewfile *.py call HeaderPython()
-function! HeaderPython()
-    call setline(1, "#!/usr/bin/env python3")
-    call setline(2, "# -*- coding: utf-8 -*-")
-    normal G
-    normal o
-    normal o
-    call setline(5, "if __name__ == '__main__':")
-    call setline(6, "    pass")
-endfunc
 
-" For shell
-autocmd bufnewfile *.sh call HeaderSh()
-function! HeaderSh()
-    call setline(1, "#!/usr/bin/env bash")
-    normal G
-    normal o
-    normal o
-endfunc
+" Status line
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
 
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
 
-" For json
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
-" For color themes
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/.vim/colors/hybrid.vim'
-set background=dark
-colorscheme hybrid
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m\
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\
