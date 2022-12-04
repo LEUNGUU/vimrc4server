@@ -1,6 +1,0 @@
-[submodule "tmux-themepack"]
-	path = tmux-themepack
-	url = https://github.com/jimeh/tmux-themepack.git
-[submodule "pack/plugins/start/lightline"]
-	path = pack/plugins/start/lightline
-	url = https://github.com/itchyny/lightline.vim.git
