@@ -11,6 +11,7 @@ set visualbell
 set fileformats=unix,dos,mac
 set virtualedit=block
 set formatoptions+=1
+colorscheme industry
 
 " vim directory
 let $DATA_PATH = expand(($XDG_CACHE_HOME ? $XDG_CACHE_HOME : '~/.cache') . '/vim')
